@@ -4,6 +4,11 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import AnimatedContent from "@/components/AnimatedContent";
 import CircularText from "@/components/CircularText";
+import CountUp from "@/components/CountUp";
+import GlareHover from "@/components/GlareHover";
+import ImageTrail from "@/components/ImageTrail";
+import Magnet from "@/components/Magnet";
+import ShinyText from "@/components/ShinyText";
 import type Lenis from "lenis";
 
 function scrollToSection(id: string) {
@@ -12,10 +17,16 @@ function scrollToSection(id: string) {
   else document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 }
 
-const FACTS = [
-  "100+ chapters nationwide",
-  "Est. 2007",
-  "Madison, Wisconsin",
+/* Placeholder chapter photos — same seeds as the gallery for cohesion */
+const TRAIL_IMAGES = [
+  "https://picsum.photos/seed/sase-gbm/600/440",
+  "https://picsum.photos/seed/sase-conv/600/440",
+  "https://picsum.photos/seed/sase-culture/600/440",
+  "https://picsum.photos/seed/sase-panel/600/440",
+  "https://picsum.photos/seed/sase-service/600/440",
+  "https://picsum.photos/seed/sase-study/600/440",
+  "https://picsum.photos/seed/sase-social/600/440",
+  "https://picsum.photos/seed/sase-food/600/440",
 ];
 
 export default function Hero() {
@@ -31,8 +42,9 @@ export default function Hero() {
   const contentScale = useTransform(scrollYProgress, [0, 1], [1, 0.95]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
 
+
   return (
-    <section id="top" ref={sectionRef} className="relative">
+    <section id="top" ref={sectionRef} className="relative isolate">
       {/* Soft white pool behind the headline so type stays quiet and legible
           against the page-wide wash */}
       <div
@@ -44,14 +56,27 @@ export default function Hero() {
         }}
       />
 
+      {/* Chapter photos trail behind the cursor as it sweeps the hero */}
+      <motion.div
+        style={{ opacity: contentOpacity }}
+        className="absolute inset-0"
+        aria-hidden
+      >
+        <ImageTrail items={TRAIL_IMAGES} variant={1} />
+      </motion.div>
+
       <motion.div
         style={{ y: contentY, scale: contentScale, opacity: contentOpacity }}
-        className="container-editorial relative flex min-h-svh flex-col items-center justify-center pb-36 pt-32 text-center"
+        className="container-editorial pointer-events-none relative z-10 flex min-h-svh flex-col items-center justify-center pb-36 pt-32 text-center"
       >
         <AnimatedContent distance={24} duration={1.1} ease="power3.out">
-          <p className="text-[15px] text-slate">
-            University of Wisconsin–Madison
-          </p>
+          <ShinyText
+            text="University of Wisconsin–Madison"
+            speed={4}
+            color="#777b86"
+            shineColor="#0050bd"
+            className="text-[15px]"
+          />
         </AnimatedContent>
 
         <AnimatedContent distance={32} duration={1.2} delay={0.12} ease="power3.out">
@@ -69,35 +94,69 @@ export default function Hero() {
         </AnimatedContent>
 
         <AnimatedContent distance={24} duration={1.1} delay={0.4} ease="power3.out">
-          <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-            <button
-              type="button"
-              onClick={() => scrollToSection("join")}
-              className="cursor-pointer rounded-full bg-ink px-6 py-3 text-[16px] text-paper transition-opacity duration-300 hover:opacity-85"
-            >
-              Join the chapter
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollToSection("events")}
-              className="cursor-pointer rounded-full border border-ink px-6 py-3 text-[16px] text-ink transition-colors duration-300 hover:bg-paper"
-            >
-              See this semester
-            </button>
+          <div className="pointer-events-auto mt-9 flex flex-wrap items-center justify-center gap-3">
+            <Magnet padding={70} magnetStrength={4}>
+              <button
+                type="button"
+                onClick={() => scrollToSection("join")}
+                className="cursor-pointer overflow-hidden rounded-full bg-ink transition-opacity duration-300 hover:opacity-90"
+              >
+                <GlareHover
+                  width="auto"
+                  height="auto"
+                  background="transparent"
+                  borderRadius="9999px"
+                  borderColor="transparent"
+                  glareColor="#ffffff"
+                  glareOpacity={0.35}
+                  glareAngle={-30}
+                  glareSize={260}
+                  transitionDuration={700}
+                  className="!border-0 px-6 py-3"
+                >
+                  <span className="text-[16px] text-paper">Join the chapter</span>
+                </GlareHover>
+              </button>
+            </Magnet>
+            <Magnet padding={70} magnetStrength={4}>
+              <button
+                type="button"
+                onClick={() => scrollToSection("events")}
+                className="cursor-pointer overflow-hidden rounded-full border border-ink transition-colors duration-300 hover:bg-paper"
+              >
+                <GlareHover
+                  width="auto"
+                  height="auto"
+                  background="transparent"
+                  borderRadius="9999px"
+                  borderColor="transparent"
+                  glareColor="#0050bd"
+                  glareOpacity={0.12}
+                  glareAngle={-30}
+                  glareSize={260}
+                  transitionDuration={700}
+                  className="!border-0 px-6 py-3"
+                >
+                  <span className="text-[16px] text-ink">See this semester</span>
+                </GlareHover>
+              </button>
+            </Magnet>
           </div>
         </AnimatedContent>
 
         {/* Chapter at a glance — quiet editorial strip */}
         <AnimatedContent distance={18} duration={1.1} delay={0.55} ease="power3.out">
           <div className="mt-16 flex flex-wrap items-center justify-center gap-x-0 gap-y-3">
-            {FACTS.map((fact, i) => (
-              <span key={fact} className="flex items-center">
-                {i > 0 && (
-                  <span aria-hidden className="mx-5 h-4 w-px bg-ink/15" />
-                )}
-                <span className="text-[15px] text-slate">{fact}</span>
-              </span>
-            ))}
+            <span className="text-[15px] text-slate">
+              <CountUp to={100} duration={2} className="tabular-nums" />
+              <span className="text-sase-blue">+</span> chapters nationwide
+            </span>
+            <span aria-hidden className="mx-5 h-4 w-px bg-ink/15" />
+            <span className="text-[15px] text-slate">
+              Est. <CountUp to={2007} from={1990} duration={2} separator="" className="tabular-nums" />
+            </span>
+            <span aria-hidden className="mx-5 h-4 w-px bg-ink/15" />
+            <span className="text-[15px] text-slate">Madison, Wisconsin</span>
           </div>
         </AnimatedContent>
       </motion.div>
@@ -108,7 +167,7 @@ export default function Hero() {
         onClick={() => scrollToSection("life")}
         aria-label="Scroll to explore"
         style={{ opacity: contentOpacity }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 cursor-pointer"
+        className="absolute bottom-6 left-1/2 z-20 -translate-x-1/2 cursor-pointer"
       >
         <div className="scale-[0.48] transition-transform duration-700 ease-glide hover:rotate-45">
           <CircularText

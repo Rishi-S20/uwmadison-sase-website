@@ -297,9 +297,9 @@ export function LiquidBlob({
       ref={containerRef}
       className={cn("pointer-events-auto absolute inset-0 overflow-hidden", className)}
     >
-      {specs.map((spec) => (
+      {specs.map((spec, i) => (
         <Blob
-          key={spec.radius + spec.width}
+          key={i}
           spec={spec}
           color={color}
           secondaryColor={secondaryColor}

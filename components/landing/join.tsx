@@ -2,6 +2,7 @@
 
 import AnimatedContent from "@/components/AnimatedContent";
 import Magnet from "@/components/Magnet";
+import { BorderBeam } from "@/components/ui/border-beam";
 
 export default function Join() {
   return (
@@ -41,7 +42,14 @@ export default function Join() {
 
           {/* The page's single accent surface — SASE blue wash, deep blue ink */}
           <AnimatedContent distance={36} duration={1.2} ease="power3.out">
-            <div className="rounded-[24px] bg-sase-wash p-8 md:p-10">
+            <div className="relative rounded-[24px] bg-sase-wash p-8 md:p-10">
+              <BorderBeam
+                size={90}
+                duration={9}
+                borderWidth={1.5}
+                colorFrom="#3d8bff"
+                colorTo="#f3c3dc"
+              />
               <p className="text-[14px] text-sase-deep/70">Our mission</p>
               <p className="mt-4 font-serif text-[clamp(1.4rem,2.4vw,1.9rem)] leading-[1.4] text-sase-deep">
                 To prepare scientists and engineers of Asian heritage for

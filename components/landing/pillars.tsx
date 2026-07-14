@@ -1,85 +1,78 @@
 "use client";
 
-import ScrollStack, { ScrollStackItem } from "@/components/ScrollStack";
+import BlurText from "@/components/BlurText";
+import FlowingMenu from "@/components/FlowingMenu";
+import Shuffle from "@/components/Shuffle";
 
-const PILLARS = [
+/* Marquee images reuse the gallery's placeholder seeds */
+const MENU_ITEMS = [
   {
-    tag: "Pillar 01",
-    title: "Professional development",
-    body: "Resume clinics, corporate panels, and mentorship that prepare members to thrive in a global, cross-cultural workplace.",
-    items: ["Resume nights", "Company panels", "Mentorship", "National convention"],
-    stroke: "#0050bd",
+    link: "#events",
+    text: "Professional development",
+    image: "https://picsum.photos/seed/sase-panel/600/440",
   },
   {
-    tag: "Pillar 02",
-    title: "Culture + community",
-    body: "A campus home that celebrates Asian heritage and diversity — across every major, background, and year.",
-    items: ["Culture nights", "Socials", "Study tables", "Food crawls"],
-    stroke: "#299d2d",
+    link: "#events",
+    text: "Culture + community",
+    image: "https://picsum.photos/seed/sase-culture/600/440",
   },
   {
-    tag: "Pillar 03",
-    title: "Service",
-    body: "Giving back to Madison through volunteering and outreach, because engineers are neighbors first.",
-    items: ["Volunteer days", "STEM outreach", "Campus partners"],
-    stroke: "#123c7d",
+    link: "#events",
+    text: "Service",
+    image: "https://picsum.photos/seed/sase-service/600/440",
   },
 ];
 
+/**
+ * Registry-native layout, no cards and no lists: TextPressure headline whose
+ * letters swell under the cursor, then FlowingMenu rows that erupt into an
+ * ink marquee of tags and photos on hover.
+ */
 export default function Pillars() {
   return (
     <section id="pillars" className="relative py-20 md:py-32">
       <div className="container-editorial">
         <p className="text-[14px] text-ash">What we do</p>
-        <h2 className="mt-4 max-w-2xl font-serif text-[clamp(2.2rem,4.6vw,4rem)] leading-[1.3] tracking-[-0.015em] text-ink">
-          Three pillars, <em className="italic">one chapter.</em>
-        </h2>
+
+        {/* Slot-shuffle headline — characters slide into place, replays on hover */}
+        <Shuffle
+          text="Three pillars."
+          tag="h2"
+          textAlign="left"
+          shuffleDirection="up"
+          duration={0.5}
+          stagger={0.04}
+          shuffleTimes={2}
+          triggerOnHover
+          respectReducedMotion
+          className="mt-4 font-serif !text-[clamp(2.4rem,5.2vw,4.4rem)] leading-[1.15] tracking-[-0.02em] text-ink"
+        />
+
+        <div className="mt-6 max-w-2xl">
+          <BlurText
+            text="Everything the chapter does hangs on three commitments — hover each one."
+            animateBy="words"
+            delay={50}
+            className="text-body-lg text-slate"
+          />
+        </div>
       </div>
 
-      {/* Cards ride the scroll: each pins and settles softly under the next */}
-      <div className="container-editorial relative mt-14 max-w-4xl">
-        <ScrollStack
-          useWindowScroll
-          itemDistance={120}
-          itemStackDistance={16}
-          stackPosition="20%"
-          scaleEndPosition="10%"
-          baseScale={0.94}
-        >
-          {PILLARS.map((pillar) => (
-            <ScrollStackItem
-              key={pillar.tag}
-              itemClassName="min-h-[22rem] md:min-h-[24rem] rounded-[24px] bg-mist/95 p-8 md:p-12"
-            >
-              <div className="flex h-full min-h-[inherit] flex-col justify-between gap-8">
-                <div className="flex items-center justify-between">
-                  <p className="text-[14px] text-ash">{pillar.tag}</p>
-                  <svg viewBox="0 0 96 20" className="h-5 w-24" fill="none" aria-hidden>
-                    <path
-                      d="M2 16 C 18 15, 28 11, 42 10 S 68 7, 80 4 S 92 2, 94 2"
-                      stroke={pillar.stroke}
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-serif text-[clamp(1.7rem,3.4vw,2.6rem)] leading-[1.18] tracking-[-0.015em] text-ink">
-                    {pillar.title}
-                  </h3>
-                  <p className="mt-4 max-w-xl text-body text-slate">{pillar.body}</p>
-                  <ul className="mt-7 flex flex-wrap gap-x-6 gap-y-2">
-                    {pillar.items.map((item) => (
-                      <li key={item} className="text-[14px] text-ash">
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </ScrollStackItem>
-          ))}
-        </ScrollStack>
+      <div className="container-editorial mt-12">
+        <div className="h-[52vh] min-h-[400px]">
+          <FlowingMenu
+            items={MENU_ITEMS}
+            textColor="#17191c"
+            bgColor="transparent"
+            borderColor="rgba(23,25,28,0.14)"
+            marqueeBgColor="#e3edfc"
+            marqueeTextColor="#123c7d"
+          />
+        </div>
+        <p className="mt-6 text-[14px] text-smoke">
+          Resume nights · Company panels · Mentorship · Culture nights ·
+          Socials · Study tables · Volunteer days · STEM outreach
+        </p>
       </div>
     </section>
   );
