@@ -1,34 +1,29 @@
-import { Chapter } from "@/components/chapter";
-import { Gallery } from "@/components/gallery";
-import { Hero } from "@/components/hero";
-import { InteractiveShell } from "@/components/interactive-shell";
-import { Manifesto } from "@/components/manifesto";
-import { Marquee } from "@/components/marquee";
-import { Moments } from "@/components/moments";
-import { PageTexture } from "@/components/page-texture";
-import { Pillars } from "@/components/pillars";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteNav } from "@/components/site-nav";
-import { Team } from "@/components/team";
+import Events from "@/components/landing/events";
+import Gallery from "@/components/landing/gallery";
+import Hero from "@/components/landing/hero";
+import Join from "@/components/landing/join";
+import Mission from "@/components/landing/mission";
+import Pillars from "@/components/landing/pillars";
+import Seam from "@/components/landing/seam";
+import Shell from "@/components/landing/shell";
+import SiteNav from "@/components/landing/site-nav";
 
-export default function Home() {
+export default function Page() {
   return (
-    <InteractiveShell>
-      <PageTexture />
+    <Shell>
       <SiteNav />
-      <main className="relative z-10">
+      <main>
         <Hero />
-        <Manifesto />
-        <Marquee />
-        <Pillars />
-        <Moments />
-        <Chapter />
         <Gallery />
-        <Team />
+        <Mission />
+        <Seam
+          primary="Science · Engineering · Community · Culture ·"
+          secondary="Society of Asian Scientists and Engineers ·"
+        />
+        <Pillars />
+        <Events />
+        <Join />
       </main>
-      <div className="relative z-10">
-        <SiteFooter />
-      </div>
-    </InteractiveShell>
+    </Shell>
   );
 }

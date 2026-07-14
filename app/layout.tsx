@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Raleway } from "next/font/google";
+import { Inter, Source_Serif_4 } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -7,16 +7,17 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const raleway = Raleway({
-  variable: "--font-raleway-var",
+const sourceSerif = Source_Serif_4({
+  variable: "--font-source-serif",
   subsets: ["latin"],
+  style: ["normal", "italic"],
   weight: ["400"],
 });
 
 export const metadata: Metadata = {
   title: "SASE at UW–Madison",
   description:
-    "The founding chapter of the Society of Asian Scientists and Engineers at the University of Wisconsin–Madison.",
+    "The Society of Asian Scientists and Engineers at the University of Wisconsin–Madison — professional development, community, and culture in STEM.",
 };
 
 export default function RootLayout({
@@ -27,7 +28,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${raleway.variable} h-full antialiased`}
+      className={`${inter.variable} ${sourceSerif.variable} h-full antialiased`}
     >
       <body className="min-h-full">{children}</body>
     </html>

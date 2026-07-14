@@ -33,6 +33,12 @@ const eslintConfig = defineConfig([
     "components/CircularGallery.tsx",
     "components/DotGrid.tsx",
     "components/FaultyTerminal.tsx",
+    "components/LaserFlow.tsx",
+    "components/ScrollStack.tsx",
+    "components/Threads.tsx",
+    "components/AnimatedContent.tsx",
+    "components/MagnetLines.tsx",
+    "components/ui/liquid-blob.tsx",
     "components/ui/split-flap-display.tsx",
   ]),
 ]);

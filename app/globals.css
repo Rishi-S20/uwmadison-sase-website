@@ -3,58 +3,70 @@
 @import "shadcn/tailwind.css";
 
 @theme {
-  /* Colors — strict monochrome interface palette (DESIGN.md) */
-  --color-obsidian: #000000;
+  /* Colors — Steep near-monochrome system (DESIGN.md) */
+  --color-ink: #17191c;
   --color-paper: #ffffff;
-  --color-inkstone: #181818;
-  --color-felt-gray: #6d6d6d;
-  --color-slate-pill: #636363;
-  --color-ash-mist: #9a9a9a;
-  --color-pewter: #808080;
+  --color-mist: #f2f2f3;
+  --color-fog: #fafafb;
+  --color-slate: #777b86;
+  --color-ash: #979799;
+  --color-smoke: #a3a6af;
 
-  /* SASE brand colors */
+  /* SASE accent rations */
+  --color-sase-wash: #e3edfc;
+  --color-sase-deep: #123c7d;
   --color-sase-blue: #0050bd;
   --color-sase-blue-bright: #3d8bff;
   --color-sase-green: #299d2d;
   --color-sase-green-bright: #4ade63;
-  --color-sase-navy: #04102b;
 
   /* Typography */
-  --font-roobert: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-raleway: var(--font-raleway-var), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-source-serif), ui-serif, Georgia, serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
-  --text-caption: 12px;
-  --text-caption--line-height: 1.19;
-  --text-body-sm: 16px;
-  --text-body-sm--line-height: 1.15;
-  --text-body: 18px;
-  --text-body--line-height: 1.21;
-  --text-subheading: 39px;
-  --text-subheading--line-height: 1.19;
-  --text-subheading-lg: 45px;
-  --text-subheading-lg--line-height: 1.15;
-  --text-heading-sm: 54px;
-  --text-heading-sm--line-height: 1.39;
-  --text-heading: 78px;
-  --text-heading--line-height: 1.1;
-  --text-heading-lg: 94px;
-  --text-heading-lg--line-height: 0.76;
-  --text-display: 225px;
-  --text-display--line-height: 1.25;
+  --text-caption: 15px;
+  --text-caption--line-height: 1.5;
+  --text-body: 17px;
+  --text-body--line-height: 1.35;
+  --text-body-lg: 20px;
+  --text-body-lg--line-height: 1.35;
+  --text-subheading: 22px;
+  --text-subheading--line-height: 1.5;
+  --text-heading-sm: 26px;
+  --text-heading-sm--line-height: 1.18;
+  --text-heading-sm--letter-spacing: -0.23px;
+  --text-heading: 44px;
+  --text-heading--line-height: 1.3;
+  --text-heading--letter-spacing: -0.66px;
+  --text-heading-lg: 64px;
+  --text-heading-lg--line-height: 1.3;
+  --text-heading-lg--letter-spacing: -0.96px;
+  --text-display: 90px;
+  --text-display--line-height: 1.3;
+  --text-display--letter-spacing: -2.25px;
+
+  /* Shape — two structural radii: pills and soft cards */
+  --radius-card: 24px;
+  --radius-artifact: 20px;
+  --radius-input: 16px;
+  --radius-image: 12px;
+
+  /* Elevation — artifacts only */
+  --shadow-artifact:
+    0 0 0 1px rgba(4, 23, 43, 0.05), 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-popover: 0 0 0 1px rgba(4, 23, 43, 0.05), 0 4px 24px rgba(0, 0, 0, 0.08);
 
   /* Motion — patient glide, never snap */
   --ease-glide: cubic-bezier(0.19, 1, 0.22, 1);
-
-  /* Shape — 0px everywhere except full pills */
-  --radius-pill: 75px;
 }
 
 :root {
-  --background: #030a18;
-  --foreground: #ffffff;
-  --border: rgba(255, 255, 255, 0.15);
-  --muted-foreground: #9a9a9a;
-  --page-max-width: 1078px;
+  --background: #ffffff;
+  --foreground: #17191c;
+  --border: #ececec;
+  --muted-foreground: #777b86;
+  --page-max-width: 1200px;
 }
 
 @theme inline {
@@ -66,18 +78,41 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
+    /* Lenis drives smooth scrolling — native smooth behavior would fight it */
+    scroll-behavior: auto;
   }
   body {
     background-color: var(--background);
     color: var(--foreground);
-    font-family: var(--font-roobert);
+    font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
   ::selection {
     background: #0050bd;
     color: #ffffff;
+  }
+}
+
+/* Watermark marquee text — hairline serif outlines, near-invisible fills */
+@utility text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(23, 25, 28, 0.16);
+}
+
+@utility text-outline-accent {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(0, 80, 189, 0.22);
+}
+
+/* Gentle vertical bob for floating hero artifacts */
+@keyframes artifact-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
   }
 }
 
