@@ -1,39 +1,70 @@
-import { Mail, MessageCircle } from "lucide-react"
+"use client";
+
+import Orb from "@/components/Orb";
+import { GhostPill } from "@/components/ui/ghost-pill";
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-border px-4 md:px-6 py-12">
-      <div className="mx-auto max-w-[1600px] flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
-        <div>
-          <span className="font-serif text-lg font-semibold tracking-tight text-foreground">
-            SASE <span className="text-muted-foreground">· UW–Madison</span>
-          </span>
-          <p className="mt-2 max-w-xs text-sm text-muted-foreground">
-            A founding chapter of the Society of Asian Scientists and
-            Engineers.
-          </p>
+    <footer id="join" className="pb-16">
+      <div className="relative h-[480px] w-full overflow-hidden">
+        <div className="absolute inset-0">
+          <Orb hue={230} hoverIntensity={0.5} rotateOnHover />
         </div>
-        <div className="flex flex-col gap-3 text-sm">
-          <a
-            href="mailto:hello@sase-uwmadison.org"
-            className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors cursor-pointer"
-          >
-            <Mail className="h-4 w-4" aria-hidden="true" />
-            hello@sase-uwmadison.org
-          </a>
-          <a
-            href="#get-involved"
-            className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors cursor-pointer"
-          >
-            <MessageCircle className="h-4 w-4" aria-hidden="true" />
-            Join our group chat
-          </a>
+        <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-8 px-6 text-center">
+          <h2 className="max-w-[16ch] text-[clamp(30px,5vw,54px)] font-normal leading-[1.2] text-paper">
+            Be first. Join the founding chapter.
+          </h2>
+          <div className="pointer-events-auto">
+            <GhostPill href="mailto:sase@rso.wisc.edu" surface="dark">
+              Join the chapter
+            </GhostPill>
+          </div>
         </div>
       </div>
-      <div className="mx-auto max-w-[1600px] mt-10 border-t border-border pt-6 text-sm text-muted-foreground">
-        © {new Date().getFullYear()} SASE at UW–Madison. Founding chapter of{" "}
-        <span className="text-foreground">SASE National</span>.
+
+      <div className="container-editorial">
+        <div className="mt-24 grid gap-10 border-t border-white/10 pt-12 sm:grid-cols-3">
+          <div className="text-[11px] leading-[1.36] text-felt-gray">
+            <p className="text-paper">SASE at UW–Madison</p>
+            <p className="mt-2">Founding chapter</p>
+            <p className="mt-2">Madison, Wisconsin</p>
+          </div>
+          <div className="text-[11px] leading-[1.36] text-felt-gray">
+            <p className="text-paper">Contact</p>
+            <p className="mt-2">
+              <a
+                href="mailto:sase@rso.wisc.edu"
+                className="cursor-target transition-colors duration-400 hover:text-sase-blue-bright"
+              >
+                sase@rso.wisc.edu
+              </a>
+            </p>
+          </div>
+          <div className="text-[11px] leading-[1.36] text-felt-gray">
+            <p className="text-paper">Elsewhere</p>
+            <p className="mt-2">
+              <a
+                href="https://www.instagram.com/sase.uwmadison"
+                className="cursor-target transition-colors duration-400 hover:text-sase-blue-bright"
+              >
+                Instagram
+              </a>
+            </p>
+            <p className="mt-2">
+              <a
+                href="https://www.saseconnect.org"
+                className="cursor-target transition-colors duration-400 hover:text-sase-blue-bright"
+              >
+                SASE National
+              </a>
+            </p>
+          </div>
+        </div>
+
+        <p className="mt-16 text-[9px] leading-[1.32] text-ash-mist">
+          © 2026 Society of Asian Scientists and Engineers, UW–Madison chapter.
+        </p>
       </div>
     </footer>
-  )
+  );
 }
