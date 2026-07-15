@@ -42,7 +42,7 @@ export default function Join() {
 
           {/* The page's single accent surface — SASE blue wash, deep blue ink */}
           <AnimatedContent distance={36} duration={1.2} ease="power3.out">
-            <div className="relative rounded-[24px] bg-sase-wash p-8 md:p-10">
+            <div className="relative rounded-[12px] bg-sase-wash p-8 md:p-10">
               <BorderBeam
                 size={90}
                 duration={9}

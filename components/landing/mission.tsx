@@ -53,7 +53,7 @@ export default function Mission() {
           {STATS.map((stat) => (
             <div
               key={stat.label}
-              className="rounded-[24px] bg-mist/90 px-6 py-7"
+              className="rounded-[12px] bg-mist/90 px-6 py-7"
             >
               <p className="text-[26px] font-medium tracking-[-0.23px] text-ink md:text-[32px]">
                 <CountUp to={stat.value} duration={2} separator="" />

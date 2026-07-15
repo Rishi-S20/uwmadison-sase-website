@@ -49,7 +49,7 @@ export default function Pillars() {
         <div className="mt-4 flex">
           <RotatingText
             texts={["Professional development", "Culture + community", "Service"]}
-            mainClassName="overflow-hidden rounded-[14px] bg-sase-wash px-4 py-1.5 font-serif text-[clamp(1.4rem,2.9vw,2.5rem)] leading-[1.2] tracking-[-0.01em] text-sase-deep sm:px-5"
+            mainClassName="overflow-hidden rounded-[8px] bg-sase-wash px-4 py-1.5 font-serif text-[clamp(1.4rem,2.9vw,2.5rem)] leading-[1.2] tracking-[-0.01em] text-sase-deep sm:px-5"
             staggerFrom="first"
             staggerDuration={0.018}
             rotationInterval={2800}

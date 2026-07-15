@@ -30,7 +30,7 @@ export default function Events() {
 
         {/* The one floating artifact of the section — an editorial schedule table */}
         <AnimatedContent distance={44} duration={1.2} ease="power3.out">
-          <div className="mt-14 rounded-[20px] bg-paper p-2 shadow-(--shadow-artifact) md:p-3">
+          <div className="mt-14 rounded-[10px] bg-paper p-2 shadow-(--shadow-artifact) md:p-3">
             <ul>
               {EVENTS.map((event, i) => (
                 <li key={event.name}>
@@ -41,7 +41,7 @@ export default function Events() {
                     ease="power3.out"
                   >
                     <div
-                      className={`group flex items-center justify-between gap-4 rounded-[14px] px-4 py-4 transition-colors duration-300 hover:bg-fog md:px-6 ${
+                      className={`group flex items-center justify-between gap-4 rounded-[8px] px-4 py-4 transition-colors duration-300 hover:bg-fog md:px-6 ${
                         i > 0 ? "border-t border-border" : ""
                       }`}
                     >
