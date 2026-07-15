@@ -2,14 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import CountUp from "@/components/CountUp";
-import { KineticTextReveal } from "@/components/ui/kinetic-text-reveal";
+import DecryptedText from "@/components/DecryptedText";
 
-const HOLD_MS = 2100;
+const HOLD_MS = 2400;
 
 /**
- * Boot screen: the wordmark rises in character by character while a thin
- * progress line fills, then the whole sheet wipes upward to reveal the hero.
+ * Boot screen: the wordmark decrypts out of scrambled characters — cipher
+ * settling into serif — then the sheet wipes upward to reveal the hero.
  */
 export default function Loader() {
   const [exiting, setExiting] = useState(false);
@@ -33,7 +32,7 @@ export default function Loader() {
   return (
     <motion.div
       aria-hidden
-      className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-paper"
+      className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-paper px-6"
       initial={{ y: 0 }}
       animate={exiting ? { y: "-100%" } : { y: 0 }}
       transition={{ duration: 0.9, ease: [0.19, 1, 0.22, 1] }}
@@ -41,37 +40,42 @@ export default function Loader() {
         if (exiting) setDone(true);
       }}
     >
-      <KineticTextReveal
+      <DecryptedText
         text="SASE"
-        splitBy="characters"
-        direction="up"
-        distance={90}
-        stagger={0.09}
-        className="font-serif text-[clamp(4rem,14vw,9rem)] leading-none tracking-[-0.03em] text-ink"
+        animateOn="view"
+        sequential
+        speed={110}
+        revealDirection="start"
+        parentClassName="font-serif text-[clamp(4rem,16vw,9rem)] leading-none tracking-[-0.03em]"
+        className="text-ink"
+        encryptedClassName="text-smoke/60"
       />
-      <KineticTextReveal
+      <DecryptedText
+        text="Society of Asian Scientists & Engineers"
+        animateOn="view"
+        sequential
+        speed={22}
+        revealDirection="center"
+        parentClassName="mt-5 text-center text-[clamp(12px,3.4vw,15px)] tracking-[0.08em]"
+        className="text-slate"
+        encryptedClassName="text-smoke/50"
+      />
+      <DecryptedText
         text="UW–Madison"
-        splitBy="characters"
-        direction="up"
-        distance={24}
-        stagger={0.03}
-        transition={{ delay: 0.5, duration: 0.6, ease: "easeOut" }}
-        className="mt-4 text-[15px] tracking-[0.08em] text-slate"
+        animateOn="view"
+        sequential
+        speed={45}
+        revealDirection="center"
+        parentClassName="mt-2 text-[clamp(11px,3vw,13px)] tracking-[0.14em]"
+        className="text-sase-blue"
+        encryptedClassName="text-smoke/40"
       />
 
-      <div className="absolute inset-x-0 bottom-14 flex flex-col items-center gap-3">
-        <div className="h-px w-44 overflow-hidden bg-ink/10">
-          <motion.div
-            className="h-full bg-sase-blue"
-            initial={{ width: "0%" }}
-            animate={{ width: "100%" }}
-            transition={{ duration: (HOLD_MS - 200) / 1000, ease: "easeInOut" }}
-          />
-        </div>
-        <p className="text-[13px] tabular-nums text-smoke">
-          <CountUp to={100} duration={(HOLD_MS - 300) / 1000} />%
-        </p>
-      </div>
+      <motion.span
+        className="absolute bottom-14 h-1.5 w-1.5 rounded-full bg-sase-blue"
+        animate={{ opacity: [0.25, 1, 0.25], scale: [1, 1.35, 1] }}
+        transition={{ duration: 1.1, repeat: Infinity, ease: "easeInOut" }}
+      />
     </motion.div>
   );
 }

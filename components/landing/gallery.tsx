@@ -17,7 +17,7 @@ const ITEMS = [
 
 export default function Gallery() {
   return (
-    <section id="life" className="relative -mt-14 pb-14 md:pb-20">
+    <section id="life" className="relative py-14 md:py-20">
       <AnimatedContent distance={28} duration={1.1} ease="power3.out" threshold={0.05}>
         <div className="container-editorial flex items-end justify-between gap-6">
           <p className="text-[14px] text-ash">Chapter life</p>
@@ -25,8 +25,7 @@ export default function Gallery() {
         </div>
       </AnimatedContent>
 
-      {/* Draggable curved gallery — images bend as they sweep past, rising
-          into the hero as it dissolves */}
+      {/* Draggable curved gallery — images bend as they sweep past */}
       <AnimatedContent distance={70} duration={1.3} ease="power3.out" scale={0.97} threshold={0.05}>
         <div className="relative mt-6 h-[380px] md:h-[480px]">
           <CircularGallery

@@ -109,7 +109,7 @@ const BLOBS: BlobSpec[] = [
 const PAGE_BLOBS: BlobSpec[] = [
   {
     width: "44%",
-    position: { left: "-14%", top: "-2%" },
+    position: { left: "-14%", top: "3%" },
     radius: "60% 40% 30% 70% / 60% 30% 70% 40%",
     drift: { x: [0, 34, -22, 0], y: [0, 26, -14, 0], scale: [1, 1.08, 0.95, 1], rotate: [0, 6, -4, 0] },
     swap: false,

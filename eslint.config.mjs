@@ -48,7 +48,15 @@ const eslintConfig = defineConfig([
     "components/BlurText.tsx",
     "components/TextPressure.tsx",
     "components/Shuffle.tsx",
+    "components/BounceCards.tsx",
+    "components/StickerPeel.tsx",
+    "components/DecryptedText.tsx",
+    "components/ui/orbit-card-stack.tsx",
+    "components/TrueFocus.tsx",
+    "components/RotatingText.tsx",
     "components/ui/split-flap-display.tsx",
+    "components/ui/scroll-morph-hero.tsx",
+    "components/ui/smooth-scroll-hero.tsx",
   ]),
 ]);
 

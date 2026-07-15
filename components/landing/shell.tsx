@@ -47,7 +47,13 @@ export default function Shell({ children }: { children: ReactNode }) {
     <ClickSpark sparkColor="#0050bd" sparkRadius={20} sparkCount={8} duration={420}>
       <Loader />
       <div className="relative min-h-screen overflow-x-clip bg-paper text-ink">
-        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+        {/* The wash starts below the hero (its pinned panel stretch is
+            1500px + 100vh tall) so the reveal plays over clean paper */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 overflow-hidden"
+          style={{ top: "calc(1500px + 100vh)" }}
+        >
           <LiquidBlob layout="page" interactive={false} blur={90} speed={34} opacity={0.5} />
         </div>
         <div className="relative">{children}</div>

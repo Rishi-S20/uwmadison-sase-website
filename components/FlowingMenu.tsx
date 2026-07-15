@@ -5,6 +5,8 @@ interface MenuItemData {
   link: string;
   text: string;
   image: string;
+  /** Optional copy for the hover marquee; falls back to `text` */
+  marqueeText?: string;
 }
 
 interface FlowingMenuProps {
@@ -59,6 +61,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
   link,
   text,
   image,
+  marqueeText,
   speed,
   textColor,
   marqueeBgColor,
@@ -70,6 +73,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
   const marqueeRef = useRef<HTMLDivElement>(null);
   const marqueeInnerRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<gsap.core.Tween | null>(null);
+  const pinnedRef = useRef(false);
   const [repetitions, setRepetitions] = useState(4);
 
   const animationDefaults = { duration: 0.6, ease: 'expo' };
@@ -125,11 +129,8 @@ const MenuItem: React.FC<MenuItemProps> = ({
     };
   }, [text, image, repetitions, speed]);
 
-  const handleMouseEnter = (ev: React.MouseEvent<HTMLAnchorElement>) => {
-    if (!itemRef.current || !marqueeRef.current || !marqueeInnerRef.current) return;
-    const rect = itemRef.current.getBoundingClientRect();
-    const edge = findClosestEdge(ev.clientX - rect.left, ev.clientY - rect.top, rect.width, rect.height);
-
+  const animateIn = (edge: 'top' | 'bottom') => {
+    if (!marqueeRef.current || !marqueeInnerRef.current) return;
     gsap
       .timeline({ defaults: animationDefaults })
       .set(marqueeRef.current, { y: edge === 'top' ? '-101%' : '101%' }, 0)
@@ -137,15 +138,41 @@ const MenuItem: React.FC<MenuItemProps> = ({
       .to([marqueeRef.current, marqueeInnerRef.current], { y: '0%' }, 0);
   };
 
-  const handleMouseLeave = (ev: React.MouseEvent<HTMLAnchorElement>) => {
-    if (!itemRef.current || !marqueeRef.current || !marqueeInnerRef.current) return;
-    const rect = itemRef.current.getBoundingClientRect();
-    const edge = findClosestEdge(ev.clientX - rect.left, ev.clientY - rect.top, rect.width, rect.height);
-
+  const animateOut = (edge: 'top' | 'bottom') => {
+    if (!marqueeRef.current || !marqueeInnerRef.current) return;
     gsap
       .timeline({ defaults: animationDefaults })
       .to(marqueeRef.current, { y: edge === 'top' ? '-101%' : '101%' }, 0)
       .to(marqueeInnerRef.current, { y: edge === 'top' ? '101%' : '-101%' }, 0);
+  };
+
+  const edgeFromEvent = (ev: React.MouseEvent<HTMLAnchorElement>): 'top' | 'bottom' => {
+    const rect = itemRef.current?.getBoundingClientRect();
+    if (!rect) return 'top';
+    return findClosestEdge(ev.clientX - rect.left, ev.clientY - rect.top, rect.width, rect.height);
+  };
+
+  const handleMouseEnter = (ev: React.MouseEvent<HTMLAnchorElement>) => {
+    if (pinnedRef.current) return;
+    animateIn(edgeFromEvent(ev));
+  };
+
+  const handleMouseLeave = (ev: React.MouseEvent<HTMLAnchorElement>) => {
+    if (pinnedRef.current) return;
+    animateOut(edgeFromEvent(ev));
+  };
+
+  // Tap/click pins the marquee open (no navigation) — tap again to close.
+  // This makes the rows usable on touch screens where hover doesn't exist.
+  const handleClick = (ev: React.MouseEvent<HTMLAnchorElement>) => {
+    ev.preventDefault();
+    if (pinnedRef.current) {
+      pinnedRef.current = false;
+      animateOut('bottom');
+    } else {
+      pinnedRef.current = true;
+      animateIn('top');
+    }
   };
 
   return (
@@ -157,6 +184,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
       <a
         className="flex items-center justify-center h-full relative cursor-pointer uppercase no-underline font-semibold text-[4vh]"
         href={link}
+        onClick={handleClick}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         style={{ color: textColor }}
@@ -171,7 +199,13 @@ const MenuItem: React.FC<MenuItemProps> = ({
         <div className="h-full w-fit flex" ref={marqueeInnerRef}>
           {[...Array(repetitions)].map((_, idx) => (
             <div className="marquee-part flex items-center flex-shrink-0" key={idx} style={{ color: marqueeTextColor }}>
-              <span className="whitespace-nowrap uppercase font-normal text-[4vh] leading-[1] px-[1vw]">{text}</span>
+              <span
+                className={`whitespace-nowrap font-normal leading-[1] px-[1vw] ${
+                  marqueeText ? 'normal-case text-[3vh]' : 'uppercase text-[4vh]'
+                }`}
+              >
+                {marqueeText ?? text}
+              </span>
               <div
                 className="w-[200px] h-[7vh] my-[2em] mx-[2vw] py-[1em] rounded-[50px] bg-cover bg-center"
                 style={{ backgroundImage: `url(${image})` }}

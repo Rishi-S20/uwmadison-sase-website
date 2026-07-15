@@ -2,31 +2,38 @@
 
 import BlurText from "@/components/BlurText";
 import FlowingMenu from "@/components/FlowingMenu";
-import Shuffle from "@/components/Shuffle";
+import RotatingText from "@/components/RotatingText";
 
-/* Marquee images reuse the gallery's placeholder seeds */
+/* Marquee images reuse the gallery's placeholder seeds; the hover band
+   streams each pillar's actual description and activities */
 const MENU_ITEMS = [
   {
     link: "#events",
     text: "Professional development",
     image: "https://picsum.photos/seed/sase-panel/600/440",
+    marqueeText:
+      "Resume clinics, corporate panels, and mentorship for a global workplace — Resume nights · Company panels · Mentorship · National convention",
   },
   {
     link: "#events",
     text: "Culture + community",
     image: "https://picsum.photos/seed/sase-culture/600/440",
+    marqueeText:
+      "A campus home celebrating Asian heritage across every major and year — Culture nights · Socials · Study tables · Food crawls",
   },
   {
     link: "#events",
     text: "Service",
     image: "https://picsum.photos/seed/sase-service/600/440",
+    marqueeText:
+      "Giving back to Madison through volunteering and outreach — Volunteer days · STEM outreach · Campus partners",
   },
 ];
 
 /**
- * Registry-native layout, no cards and no lists: TextPressure headline whose
- * letters swell under the cursor, then FlowingMenu rows that erupt into an
- * ink marquee of tags and photos on hover.
+ * Registry-native layout, no cards and no lists: a serif headline whose
+ * rotating word flips through the three pillar names, then FlowingMenu rows
+ * that erupt into a marquee of activities on hover or tap.
  */
 export default function Pillars() {
   return (
@@ -34,23 +41,25 @@ export default function Pillars() {
       <div className="container-editorial">
         <p className="text-[14px] text-ash">What we do</p>
 
-        {/* Slot-shuffle headline — characters slide into place, replays on hover */}
-        <Shuffle
-          text="Three pillars."
-          tag="h2"
-          textAlign="left"
-          shuffleDirection="up"
-          duration={0.5}
-          stagger={0.04}
-          shuffleTimes={2}
-          triggerOnHover
-          respectReducedMotion
-          className="mt-4 font-serif !text-[clamp(2.4rem,5.2vw,4.4rem)] leading-[1.15] tracking-[-0.02em] text-ink"
-        />
+        {/* Rotating headline — the pillar names spring through a wash pill,
+            character by character, previewing the rows beneath */}
+        <h2 className="mt-6 font-serif text-[clamp(2.4rem,5.2vw,4.4rem)] leading-[1.12] tracking-[-0.02em] text-ink">
+          Three pillars.
+        </h2>
+        <div className="mt-4 flex">
+          <RotatingText
+            texts={["Professional development", "Culture + community", "Service"]}
+            mainClassName="overflow-hidden rounded-[14px] bg-sase-wash px-4 py-1.5 font-serif text-[clamp(1.4rem,2.9vw,2.5rem)] leading-[1.2] tracking-[-0.01em] text-sase-deep sm:px-5"
+            staggerFrom="first"
+            staggerDuration={0.018}
+            rotationInterval={2800}
+            splitBy="characters"
+          />
+        </div>
 
         <div className="mt-6 max-w-2xl">
           <BlurText
-            text="Everything the chapter does hangs on three commitments — hover each one."
+            text="Everything the chapter does hangs on three commitments — open each one."
             animateBy="words"
             delay={50}
             className="text-body-lg text-slate"
@@ -69,10 +78,6 @@ export default function Pillars() {
             marqueeTextColor="#123c7d"
           />
         </div>
-        <p className="mt-6 text-[14px] text-smoke">
-          Resume nights · Company panels · Mentorship · Culture nights ·
-          Socials · Study tables · Volunteer days · STEM outreach
-        </p>
       </div>
     </section>
   );

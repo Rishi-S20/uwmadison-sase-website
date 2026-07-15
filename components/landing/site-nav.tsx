@@ -1,5 +1,8 @@
 "use client";
 
+"use client";
+
+import { useEffect, useState } from "react";
 import type Lenis from "lenis";
 
 const LINKS = [
@@ -18,8 +21,28 @@ function scrollToSection(id: string) {
 }
 
 export default function SiteNav() {
+  // The nav stays out of the way for the whole hero sequence (panel reveal +
+  // parallax photos) and slides in as the mission section arrives.
+  const [heroInView, setHeroInView] = useState(true);
+
+  useEffect(() => {
+    const hero = document.getElementById("top");
+    if (!hero) return;
+    const observer = new IntersectionObserver(([entry]) =>
+      setHeroInView(entry.isIntersecting),
+    );
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <header className="fixed inset-x-0 top-0 z-50 bg-paper/70 backdrop-blur-md">
+    <header
+      className={`fixed inset-x-0 top-0 z-50 bg-paper/70 backdrop-blur-md transition-all duration-500 ease-glide ${
+        heroInView
+          ? "pointer-events-none -translate-y-full opacity-0"
+          : "translate-y-0 opacity-100"
+      }`}
+    >
       <nav className="container-editorial flex h-16 items-center justify-between">
         <button
           type="button"

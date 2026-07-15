@@ -14,8 +14,8 @@ export default function Page() {
       <SiteNav />
       <main>
         <Hero />
-        <Gallery />
         <Mission />
+        <Gallery />
         <Seam
           primary="Science · Engineering · Community · Culture ·"
           secondary="Society of Asian Scientists and Engineers ·"
