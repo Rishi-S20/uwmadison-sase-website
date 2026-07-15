@@ -19,7 +19,7 @@ export default function Gallery() {
   return (
     <section id="life" className="relative py-14 md:py-20">
       <AnimatedContent distance={28} duration={1.1} ease="power3.out" threshold={0.05}>
-        <div className="container-editorial flex items-end justify-between gap-6">
+        <div className="container-editorial flex flex-wrap items-end justify-between gap-x-6 gap-y-1">
           <p className="text-[14px] text-ash">Chapter life</p>
           <p className="text-[14px] text-smoke">Drag or scroll — photos coming soon</p>
         </div>

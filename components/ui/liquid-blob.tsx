@@ -116,7 +116,7 @@ const PAGE_BLOBS: BlobSpec[] = [
     fade: false,
     damping: 25,
     durFactor: 1,
-    colors: ["#c9b8f5", "#f3c3dc"],
+    colors: ["#a7c6f2", "#c9b8f5"],
   },
   {
     width: "38%",
@@ -127,7 +127,7 @@ const PAGE_BLOBS: BlobSpec[] = [
     fade: false,
     damping: 30,
     durFactor: 1.18,
-    colors: ["#f3c3dc", "#c9b8f5"],
+    colors: ["#c9b8f5", "#a7c6f2"],
   },
   {
     width: "40%",
@@ -138,7 +138,7 @@ const PAGE_BLOBS: BlobSpec[] = [
     fade: false,
     damping: 35,
     durFactor: 0.88,
-    colors: ["#c3d3f7", "#e7c9ee"],
+    colors: ["#a7c6f2", "#c2d8f7"],
   },
   {
     width: "42%",
@@ -149,7 +149,7 @@ const PAGE_BLOBS: BlobSpec[] = [
     fade: false,
     damping: 20,
     durFactor: 1.32,
-    colors: ["#c3cdf5", "#dcc9f0"],
+    colors: ["#b4cdf4", "#c9b8f5"],
   },
   {
     width: "38%",
@@ -160,7 +160,7 @@ const PAGE_BLOBS: BlobSpec[] = [
     fade: false,
     damping: 28,
     durFactor: 1.1,
-    colors: ["#d5c9f2", "#f0cde0"],
+    colors: ["#c9b8f5", "#b4cdf4"],
   },
   {
     width: "40%",
@@ -171,7 +171,7 @@ const PAGE_BLOBS: BlobSpec[] = [
     fade: false,
     damping: 32,
     durFactor: 0.95,
-    colors: ["#c9b8f5", "#c3d3f7"],
+    colors: ["#9bbdf0", "#c9b8f5"],
   },
   {
     width: "42%",
@@ -182,7 +182,7 @@ const PAGE_BLOBS: BlobSpec[] = [
     fade: false,
     damping: 24,
     durFactor: 1.22,
-    colors: ["#f3c3dc", "#e7c9ee"],
+    colors: ["#d5c9f2", "#a7c6f2"],
   },
 ]
 

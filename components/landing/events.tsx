@@ -53,14 +53,14 @@ export default function Events() {
                           {event.name}
                         </p>
                       </div>
-                      <div className="flex shrink-0 items-center gap-6">
+                      <div className="flex shrink-0 items-center gap-3 sm:gap-6">
                         <span className="hidden text-[14px] text-ash sm:inline">
                           {event.tag}
                         </span>
                         <span className="text-[15px] text-slate">
                           {event.when}
                         </span>
-                        <span className="text-ink opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                        <span className="hidden text-ink opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:inline">
                           →
                         </span>
                       </div>

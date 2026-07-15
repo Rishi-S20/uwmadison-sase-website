@@ -54,6 +54,7 @@ const eslintConfig = defineConfig([
     "components/ui/orbit-card-stack.tsx",
     "components/TrueFocus.tsx",
     "components/RotatingText.tsx",
+    "components/PillNav.tsx",
     "components/ui/split-flap-display.tsx",
     "components/ui/scroll-morph-hero.tsx",
     "components/ui/smooth-scroll-hero.tsx",

@@ -13,7 +13,7 @@ import {
   useTransform,
   type MotionValue,
 } from "framer-motion";
-import { useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 const SECTION_HEIGHT = 1500;
 
@@ -55,10 +55,16 @@ export default function SmoothScrollHero({
       </CenterPanel>
       <ParallaxImages images={images} />
 
-      {/* Bottom blend — the reference's fade strip, pointed at the page
-          background so the panel dissolves into the next section instead of
-          ending on a hard edge */}
-      <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-20 h-[50vh] bg-gradient-to-b from-transparent via-paper/70 to-paper" />
+      {/* Bottom blend — the reference's fade strip. It steps through the
+          panel's own pale-lavender family on the way to paper so the violet
+          dissolves tonally instead of graying out against the white */}
+      <div
+        className="pointer-events-none absolute bottom-0 left-0 right-0 z-20 h-[50vh]"
+        style={{
+          background:
+            "linear-gradient(to bottom, transparent, rgba(227,237,252,0.6) 45%, var(--color-paper) 92%)",
+        }}
+      />
     </div>
   );
 }
@@ -72,15 +78,27 @@ const CenterPanel = ({
   progress: MotionValue<number>;
   panelClassName?: string;
 }) => {
-  const clip1 = useTransform(progress, [0, 0.7], [25, 0]);
-  const clip2 = useTransform(progress, [0, 0.7], [75, 100]);
+  // On phones the initial window opens wider and the zoom starts lower so
+  // the slotted wordmark fits inside the clip from the first frame.
+  const [compact, setCompact] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const update = () => setCompact(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  const clip1 = useTransform(progress, [0, 0.7], [compact ? 15 : 25, 0]);
+  const clip2 = useTransform(progress, [0, 0.7], [compact ? 85 : 75, 100]);
 
   const clipPath = useMotionTemplate`polygon(${clip1}% ${clip1}%, ${clip2}% ${clip1}%, ${clip2}% ${clip2}%, ${clip1}% ${clip2}%)`;
 
   // The reference zooms its background image from 170% -> 100%; with slotted
   // content the equivalent is a scale on the inner wrapper. No opacity fade:
   // the panel stays solid and wipes off-screen when the pin ends.
-  const scale = useTransform(progress, [0, 0.85], [1.7, 1]);
+  const scale = useTransform(progress, [0, 0.85], [compact ? 1.15 : 1.7, 1]);
 
   return (
     <motion.div
@@ -126,7 +144,7 @@ const ParallaxImg = ({ className, alt, src, start, end }: ParallaxImageSpec) => 
     <motion.img
       src={src}
       alt={alt}
-      className={`rounded-[8px] shadow-(--shadow-artifact) ${className}`}
+      className={`shadow-(--shadow-artifact) ${className}`}
       ref={ref}
       style={{ transform, opacity }}
     />
