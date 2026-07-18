@@ -7,6 +7,7 @@ import Pillars from "@/components/landing/pillars";
 import Seam from "@/components/landing/seam";
 import Shell from "@/components/landing/shell";
 import SiteNav from "@/components/landing/site-nav";
+import SponsorsTeaser from "@/components/landing/sponsors-teaser";
 
 export default function Page() {
   return (
@@ -22,6 +23,7 @@ export default function Page() {
         />
         <Pillars />
         <Events />
+        <SponsorsTeaser />
         <Join />
       </main>
     </Shell>

@@ -2,6 +2,7 @@
 
 import AnimatedContent from "@/components/AnimatedContent";
 import Magnet from "@/components/Magnet";
+import Footer from "@/components/landing/footer";
 import { BorderBeam } from "@/components/ui/border-beam";
 
 export default function Join() {
@@ -64,20 +65,7 @@ export default function Join() {
         </div>
       </div>
 
-      <footer className="container-editorial relative mt-24 border-t border-border pt-8">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <p className="text-[14px] text-slate">SASE at UW–Madison</p>
-          <a
-            href="mailto:sase@rso.wisc.edu"
-            className="text-[14px] text-slate transition-colors duration-300 hover:text-ink"
-          >
-            sase@rso.wisc.edu
-          </a>
-          <p className="text-[14px] text-slate">
-            © {new Date().getFullYear()} — Madison, Wisconsin
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </section>
   );
 }

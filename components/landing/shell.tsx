@@ -13,8 +13,20 @@ import Loader from "@/components/landing/loader";
  * Owns the page-wide Lenis smooth-scroll instance (exposed at window.__lenis
  * for anchor navigation). SASE-blue click sparks are the only other
  * page-wide flourish.
+ *
+ * `loader` and `washTop` default to the landing page's boot screen and
+ * hero-clearing wash offset; interior pages pass loader={false} and a
+ * shallower washTop since they open on a plain editorial hero.
  */
-export default function Shell({ children }: { children: ReactNode }) {
+export default function Shell({
+  children,
+  loader = true,
+  washTop = "100vh",
+}: {
+  children: ReactNode;
+  loader?: boolean;
+  washTop?: string;
+}) {
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
@@ -45,14 +57,14 @@ export default function Shell({ children }: { children: ReactNode }) {
 
   return (
     <ClickSpark sparkColor="#0050bd" sparkRadius={20} sparkCount={8} duration={420}>
-      <Loader />
+      {loader && <Loader />}
       <div className="relative min-h-screen overflow-x-clip bg-paper text-ink">
-        {/* The wash starts below the hero (its pinned panel stretch is
-            1500px + 100vh tall) so the reveal plays over clean paper */}
+        {/* The wash starts below the hero (one viewport of dither panel on
+            the landing page) so the opening plays over clean paper */}
         <div
           aria-hidden
           className="pointer-events-none absolute inset-x-0 bottom-0 overflow-hidden"
-          style={{ top: "calc(1500px + 100vh)" }}
+          style={{ top: washTop }}
         >
           <LiquidBlob layout="page" interactive={false} blur={90} speed={34} opacity={0.5} />
         </div>

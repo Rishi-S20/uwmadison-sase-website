@@ -1,69 +1,76 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import PillNav from "@/components/PillNav";
-import type Lenis from "lenis";
+import CardNav, { type CardNavItem } from "@/components/CardNav";
+import { scrollToAnchor, scrollToTop } from "@/lib/scroll-to-anchor";
 
-const ITEMS = [
-  { label: "Home", href: "#top" },
-  { label: "Mission", href: "#mission" },
-  { label: "Pillars", href: "#pillars" },
-  { label: "Events", href: "#events" },
-  { label: "Join", href: "#join" },
+/* Default (landing page) card grouping — CardNav renders up to three cards. */
+const ITEMS: CardNavItem[] = [
+  {
+    label: "Chapter",
+    bgColor: "#f2f2f3",
+    textColor: "#17191c",
+    links: [
+      { label: "Mission", href: "#mission", ariaLabel: "Go to mission" },
+      { label: "Pillars", href: "#pillars", ariaLabel: "Go to pillars" },
+    ],
+  },
+  {
+    label: "Happenings",
+    bgColor: "#e3edfc",
+    textColor: "#123c7d",
+    links: [
+      { label: "Events", href: "#events", ariaLabel: "Go to events" },
+      { label: "Join", href: "#join", ariaLabel: "Go to join" },
+    ],
+  },
+  {
+    label: "Sponsors",
+    bgColor: "#17191c",
+    textColor: "#ffffff",
+    links: [
+      { label: "Why sponsor", href: "/sponsors", ariaLabel: "Sponsorship page" },
+      { label: "Tiers", href: "/sponsors#tiers", ariaLabel: "Sponsorship tiers" },
+      { label: "Contact", href: "/sponsors#contact", ariaLabel: "Sponsorship contact" },
+    ],
+  },
 ];
 
-export default function SiteNav() {
-  // The nav stays out of the way for the whole hero sequence (panel reveal +
-  // parallax photos) and slides in as the mission section arrives.
-  const [heroInView, setHeroInView] = useState(true);
-
-  useEffect(() => {
-    const hero = document.getElementById("top");
-    if (!hero) return;
-    const observer = new IntersectionObserver(([entry]) =>
-      setHeroInView(entry.isIntersecting),
-    );
-    observer.observe(hero);
-    return () => observer.disconnect();
-  }, []);
-
-  const handleItemClick = (
+export default function SiteNav({
+  items = ITEMS,
+  ctaLabel = "Join",
+  ctaHref = "#join",
+}: {
+  items?: CardNavItem[];
+  ctaLabel?: string;
+  ctaHref?: string;
+}) {
+  // In-page anchors ride the shared Lenis instance and clear the fixed bar;
+  // route + mailto hrefs fall through to normal navigation.
+  const handleLinkClick = (
     href: string,
     e: React.MouseEvent<HTMLAnchorElement>,
   ) => {
     if (!href.startsWith("#")) return;
-    e.preventDefault();
-    const lenis = (window as unknown as { __lenis?: Lenis }).__lenis;
-    if (href === "#top") {
-      if (lenis) lenis.scrollTo(0);
-      else window.scrollTo({ top: 0, behavior: "smooth" });
-      return;
-    }
-    if (lenis) lenis.scrollTo(href, { offset: -32 });
-    else document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+    scrollToAnchor(href, e, -96);
   };
 
   return (
-    <header
-      className={`fixed inset-x-0 top-3 z-50 flex justify-center px-4 transition-all duration-500 ease-glide ${
-        heroInView
-          ? "pointer-events-none -translate-y-8 opacity-0"
-          : "translate-y-0 opacity-100"
-      }`}
-    >
-      <PillNav
+    <header className="fixed inset-x-0 top-0 z-50">
+      <CardNav
         logoNode={
-          <span className="font-serif text-[17px] leading-none text-paper">
+          <span className="font-serif text-[19px] leading-none text-paper">
             S
           </span>
         }
-        items={ITEMS}
+        onLogoClick={scrollToTop}
+        items={items}
         baseColor="#17191c"
-        pillColor="#ffffff"
-        pillTextColor="#17191c"
-        hoveredPillTextColor="#ffffff"
-        onItemClick={handleItemClick}
-        initialLoadAnimation={false}
+        menuColor="#ffffff"
+        ctaLabel={ctaLabel}
+        ctaHref={ctaHref}
+        buttonBgColor="#0050bd"
+        buttonTextColor="#ffffff"
+        onLinkClick={handleLinkClick}
       />
     </header>
   );
